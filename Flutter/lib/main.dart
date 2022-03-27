@@ -310,7 +310,7 @@ class VebView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Wifi Lock'),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.cyan[900],
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
