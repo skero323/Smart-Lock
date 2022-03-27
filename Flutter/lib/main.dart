@@ -57,7 +57,7 @@ class ChooseRoute extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const WebView()),
+                      MaterialPageRoute(builder: (context) => const VebView()),
                     );
                   },
                 ),
@@ -188,7 +188,7 @@ class _MainActivityState extends State<MainActivity> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext kontext) {
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xff033433)),
       home: Scaffold(
@@ -198,7 +198,8 @@ class _MainActivityState extends State<MainActivity> {
           backgroundColor: Colors.cyan[900],
           leading: GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              disconnectFromDevice();
+              Navigator.pop(kontext);
             },
             child: Icon(
               Icons.arrow_back, // add custom icons also
@@ -274,21 +275,28 @@ class _MainActivityState extends State<MainActivity> {
   }
 }
 
-class webView extends StatelessWidget {
-  const webView({Key? key}) : super(key: key);
+class VebView extends StatelessWidget {
+  const VebView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Wifi Lock'),
-        centerTitle: true,
-        backgroundColor: Colors.cyan[900],
-      ),
-      body: WebView(
-        javascriptMode: JavascriptMode.unrestricted,
-        initialUrl: '192.168.200.2',
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Wifi Lock'),
+          centerTitle: true,
+          backgroundColor: Colors.cyan[900],
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back, // add custom icons also
+            ),
+          ),
+        ),
+        body: WebView(
+          javascriptMode: JavascriptMode.unrestricted,
+          initialUrl: '192.168.200.2',
+        ));
   }
 }
