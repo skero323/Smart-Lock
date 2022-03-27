@@ -1,5 +1,5 @@
+// ignore_for_file: avoid_print, non_constant_identifier_names
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:convert' show utf8;
 import 'package:flutter_blue/flutter_blue.dart';
@@ -18,9 +18,11 @@ class ChooseRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff033433),
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Izbirni meni'),
+        backgroundColor: Colors.cyan[900],
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -33,27 +35,42 @@ class ChooseRoute extends StatelessWidget {
                 height: 100,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.greenAccent,
+                    primary: Colors.cyan[900],
                     onPrimary: Colors.black,
                   ),
-                  child: const Text('BluLock'),
+                  child: const Text(
+                    'BluLock',
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white,
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BluLock()),
+                      MaterialPageRoute(builder: (context) => const BluLock()),
                     );
                   },
                 ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               SizedBox(
                 width: 200,
                 height: 100,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.redAccent,
+                    primary: Colors.cyan[900],
                     onPrimary: Colors.white,
                   ),
-                  child: const Text('WebView'),
+                  child: const Text(
+                    'WebView',
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white,
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -71,6 +88,8 @@ class ChooseRoute extends StatelessWidget {
 //v main je drgac samo runApp(BluLock());
 
 class BluLock extends StatelessWidget {
+  const BluLock({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -131,6 +150,7 @@ class _MainActivityState extends State<MainActivity> {
   }
 
   stopScan() {
+    flutterBlue.stopScan();
     scanSubScription?.cancel();
     scanSubScription = null;
   }
@@ -167,7 +187,7 @@ class _MainActivityState extends State<MainActivity> {
     List<BluetoothService>? services = await targetDevice?.discoverServices();
     services?.forEach((service) {
       if (service.uuid.toString() == SERVICE_UUID) {
-        service.characteristics.forEach((characteristic) {
+        for (var characteristic in service.characteristics) {
           if (characteristic.uuid.toString() == CHARACTERISTIC_UUID) {
             targetCharacteristic = characteristic;
             writeData("Hi thereeeeee, esp");
@@ -175,7 +195,7 @@ class _MainActivityState extends State<MainActivity> {
               conncetionText = "All Ready With ${targetDevice?.name}";
             });
           }
-        });
+        }
       }
     });
   }
@@ -190,18 +210,24 @@ class _MainActivityState extends State<MainActivity> {
   @override
   Widget build(BuildContext kontext) {
     return MaterialApp(
-      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xff033433)),
+      theme: ThemeData(scaffoldBackgroundColor: const Color(0xff033433)),
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Bluetooth lock'),
+          title: const Text('Bluetooth lock'),
           backgroundColor: Colors.cyan[900],
           leading: GestureDetector(
             onTap: () {
+              stopScan();
               disconnectFromDevice();
-              Navigator.pop(kontext);
+              Navigator.of(
+                context,
+                rootNavigator: true,
+              ).pop(
+                context,
+              );
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back, // add custom icons also
             ),
           ),
@@ -223,7 +249,7 @@ class _MainActivityState extends State<MainActivity> {
                     child: const Text(
                       'Odkleni',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 17,
                         color: Colors.black,
                       ),
                     ),
@@ -244,7 +270,7 @@ class _MainActivityState extends State<MainActivity> {
                     child: const Text(
                       'Zakleni',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 17,
                         color: Colors.black,
                       ),
                     ),
@@ -254,7 +280,7 @@ class _MainActivityState extends State<MainActivity> {
                 const SizedBox(
                   height: 60,
                 ),
-                Row(
+                /* Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -267,7 +293,7 @@ class _MainActivityState extends State<MainActivity> {
                       child: const Text("disconnect"),
                     ),
                   ],
-                ),
+                ), */
               ]),
         ),
       ),
@@ -282,19 +308,19 @@ class VebView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Wifi Lock'),
+          title: const Text('Wifi Lock'),
           centerTitle: true,
-          backgroundColor: Colors.cyan[900],
+          backgroundColor: Colors.blue,
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back, // add custom icons also
             ),
           ),
         ),
-        body: WebView(
+        body: const WebView(
           javascriptMode: JavascriptMode.unrestricted,
           initialUrl: '192.168.200.2',
         ));
