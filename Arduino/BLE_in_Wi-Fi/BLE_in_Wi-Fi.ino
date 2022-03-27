@@ -159,44 +159,6 @@ void loop() {
             client.println();
 
             // the content of the HTTP response follows the header:
-            /*client.print(" <!DOCTYPE html> ");
-              client.print(" <html lang=\"en\"> ");
-              client.print(" <head> ");
-              client.print("     <meta charset=\"UTF-8\"> ");
-              client.print("     <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> ");
-              client.print("     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> ");
-              client.print("     <title>Document</title> ");
-              client.print("     <style> ");
-              client.print("         body{ ");
-              client.print("             text-align: center; ");
-              client.print("             background-color: #3a639c; ");
-              client.print("         } ");
-              client.print("         h1{ ");
-              client.print("             background-color: #df5c29; ");
-              client.print("             border-radius: 15px; ");
-              client.print("             padding: 14px 40px; ");
-              client.print("         } ");
-              client.print("         .button{ ");
-              client.print("             border-radius: 8px; ");
-              client.print("             padding: 14px 40px; ");
-              client.print("             background-color: #df5c29; ");
-              client.print("             border: 1px solid black; ");
-              client.print("             border-radius: 15px; ");
-              client.print("             font-size: 20px; ");
-              client.print("             margin: 10px; ");
-              client.print("             cursor:crosshair; ");
-              client.print("         } ");
-              client.print("     </style> ");
-              client.print(" </head> ");
-              client.print(" <body> ");
-              client.print("     <h1>DoorLock</h1> ");
-              client.print("     <br> ");
-              client.print("     <div><a href=\"/26/\"><button class=\"button\">ODKLENI</button></a></div>  ");
-              client.print("     <br> ");
-              client.print("     <div><a href=\"/25/\"><button class=\"button\">ZAKLENI</button></a></div>  ");
-              client.print(" </body> ");
-              client.print(" </html> ");*/
-
             client.print(" <!DOCTYPE html> ");
             client.print(" <html lang=\"en\"> ");
             client.print(" <head> ");
@@ -220,13 +182,13 @@ void loop() {
             client.print("         .gumbi{ ");
             client.print("             border: 0.1px solid black; ");
             client.print("             color: black; ");
-            client.print("             padding: 20px 32px; ");
+            client.print("             padding: 41px 67px; ");
             client.print("             text-align: center; ");
             client.print("             text-decoration: none; ");
             client.print("             border-radius: 4px; ");
-            client.print("             font-size: 16px; ");
+            client.print("             font-size: 18px; ");
             client.print("             margin: 5px; ");
-            client.print("             cursor: pointer; ");
+            client.print("             font-weight: 550; ");
             client.print("         } ");
             client.print("         #odkleni { ");
             client.print("             background-color: #69f0ae; ");
@@ -238,9 +200,8 @@ void loop() {
             client.print(" </head> ");
             client.print(" <body> ");
             client.print("     <div class=\"box\"> ");
-            client.print("         <div><a href=\"/26/\"></a><button class=\"gumbi\" id=\"odkleni\">Odkleni</button></a></div> ");
-            client.print("         <br> ");
-            client.print("         <div><a href=\"/25/\"></a><button class=\"gumbi\" id=\"zakleni\">Zakleni</button></a></div> ");
+            client.print("         <div><a href=\"/26/\"><button class=\"gumbi\" id=\"odkleni\">Odkleni</button></a></div> ");
+            client.print("         <div><a href=\"/25/\"><button class=\"gumbi\" id=\"zakleni\">Zakleni</button></a></div> ");
             client.print("     </div> ");
             client.print(" </body> ");
             client.print(" </html> ");
