@@ -17,7 +17,7 @@ char password[] = "mojdom123";
 char private_key[] = "0Pw/m0VlbsN1qkpNeGxnCRzQI4bcRnMHNyyWM7NXlWE=";
 char public_key[] = "04pddjg8rzMmZbhXImwGBaOkWXXplmZM6aEcwfuzESw=";
 char endpoint_address[] = "192.168.1.5";
-IPAddress local_ip(192,168,200,2);
+IPAddress local_ip(192, 168, 200, 2);
 int endpoint_port = 51820;
 int povezani = 0;
 
@@ -55,46 +55,46 @@ class ServerCallbacks: public BLEServerCallbacks {
     }
 };
 
-class Callbacks: public BLECharacteristicCallbacks{
-  void onWrite(BLECharacteristic *pCharacteristic){
-    std::string value = pCharacteristic->getValue();
+class Callbacks: public BLECharacteristicCallbacks {
+    void onWrite(BLECharacteristic *pCharacteristic) {
+      std::string value = pCharacteristic->getValue();
 
-    if(value.length() > 0){
-      for(int i = 0; i < value.length(); i++){
-        if(value[i] == '1'){
-          Serial.println("Odklepam");
-          digitalWrite(ODKLENJENO, HIGH);
-          digitalWrite(ZAKLENJENO, LOW);
-          angle = 180;
-          servo.write(angle);
-          delay(15);
+      if (value.length() > 0) {
+        for (int i = 0; i < value.length(); i++) {
+          if (value[i] == '1') {
+            Serial.println("Odklepam");
+            digitalWrite(ODKLENJENO, HIGH);
+            digitalWrite(ZAKLENJENO, LOW);
+            angle = 180;
+            servo.write(angle);
+            delay(15);
           }
-         if(value[i] == '0'){
-           Serial.println("Zaklepam");
-           digitalWrite(ODKLENJENO, LOW);
-           digitalWrite(ZAKLENJENO, HIGH);
-           angle = 0;
-           servo.write(angle);
-           delay(15);
+          if (value[i] == '0') {
+            Serial.println("Zaklepam");
+            digitalWrite(ODKLENJENO, LOW);
+            digitalWrite(ZAKLENJENO, HIGH);
+            angle = 0;
+            servo.write(angle);
+            delay(15);
           }
         }
       }
     }
 };
 
-void setup(){
+void setup() {
   Serial.begin(115200);
   delay(1000);
   servo.attach(servoPin);
   servo.write(0);
   pinMode(ZAKLENJENO, OUTPUT);
   pinMode(ODKLENJENO, OUTPUT);
-  
+
   //setting up WiFi
   Serial.println("Connecting to WiFi...");
   WiFi.begin(ssid, password);
-  while( !WiFi.isConnected() ) {
-        delay(1000);
+  while ( !WiFi.isConnected() ) {
+    delay(1000);
   }
   server.begin();
   Serial.println(WiFi.dnsIP(0));
@@ -103,11 +103,11 @@ void setup(){
 
   Serial.println("Connected. Initializing WireGuard...");
   wg.begin(
-      local_ip,
-      private_key,
-      endpoint_address,
-      public_key,
-      endpoint_port);
+    local_ip,
+    private_key,
+    endpoint_address,
+    public_key,
+    endpoint_port);
   delay(4000);
   Serial.println("Done, setting up Bluetooth...");
 
@@ -135,12 +135,12 @@ void setup(){
   Serial.println("Bluetooth is set, starting advertising...");
 }
 
-void loop(){
+void loop() {
   //WiFi and WireGuard
   WiFiClient client = server.available();
   if (client) {  // if you get a client,
-    Serial.printf("connected: %d",povezani);
-        povezani++;
+    Serial.printf("connected: %d", povezani);
+    povezani++;
     Serial.println("New Client.");           // print a message out the serial port
     String currentLine = "";                // make a String to hold incoming data from the client
     while (client.connected()) {            // loop while the client's connected
@@ -159,6 +159,44 @@ void loop(){
             client.println();
 
             // the content of the HTTP response follows the header:
+            /*client.print(" <!DOCTYPE html> ");
+              client.print(" <html lang=\"en\"> ");
+              client.print(" <head> ");
+              client.print("     <meta charset=\"UTF-8\"> ");
+              client.print("     <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> ");
+              client.print("     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> ");
+              client.print("     <title>Document</title> ");
+              client.print("     <style> ");
+              client.print("         body{ ");
+              client.print("             text-align: center; ");
+              client.print("             background-color: #3a639c; ");
+              client.print("         } ");
+              client.print("         h1{ ");
+              client.print("             background-color: #df5c29; ");
+              client.print("             border-radius: 15px; ");
+              client.print("             padding: 14px 40px; ");
+              client.print("         } ");
+              client.print("         .button{ ");
+              client.print("             border-radius: 8px; ");
+              client.print("             padding: 14px 40px; ");
+              client.print("             background-color: #df5c29; ");
+              client.print("             border: 1px solid black; ");
+              client.print("             border-radius: 15px; ");
+              client.print("             font-size: 20px; ");
+              client.print("             margin: 10px; ");
+              client.print("             cursor:crosshair; ");
+              client.print("         } ");
+              client.print("     </style> ");
+              client.print(" </head> ");
+              client.print(" <body> ");
+              client.print("     <h1>DoorLock</h1> ");
+              client.print("     <br> ");
+              client.print("     <div><a href=\"/26/\"><button class=\"button\">ODKLENI</button></a></div>  ");
+              client.print("     <br> ");
+              client.print("     <div><a href=\"/25/\"><button class=\"button\">ZAKLENI</button></a></div>  ");
+              client.print(" </body> ");
+              client.print(" </html> ");*/
+
             client.print(" <!DOCTYPE html> ");
             client.print(" <html lang=\"en\"> ");
             client.print(" <head> ");
@@ -167,35 +205,46 @@ void loop(){
             client.print("     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> ");
             client.print("     <title>Document</title> ");
             client.print("     <style> ");
-            client.print("         body{ ");
+            client.print("         body { ");
             client.print("             text-align: center; ");
-            client.print("             background-color: #3a639c; ");
+            client.print("             background-color: #033433; ");
             client.print("         } ");
-            client.print("         h1{ ");
-            client.print("             background-color: #df5c29; ");
-            client.print("             border-radius: 15px; ");
-            client.print("             padding: 14px 40px; ");
+            client.print("         .box{ ");
+            client.print("             margin: 0; ");
+            client.print("             position: absolute; ");
+            client.print("             top: 50%; ");
+            client.print("             left: 50%; ");
+            client.print("             -ms-transform: translate(-50%, -50%); ");
+            client.print("             transform: translate(-50%, -50%); ");
             client.print("         } ");
-            client.print("         .button{ ");
-            client.print("             border-radius: 8px; ");
-            client.print("             padding: 14px 40px; ");
-            client.print("             background-color: #df5c29; ");
-            client.print("             border: 1px solid black; ");
-            client.print("             border-radius: 15px; ");
-            client.print("             font-size: 20px; ");
-            client.print("             margin: 10px; ");
-            client.print("             cursor:crosshair; ");
+            client.print("         .gumbi{ ");
+            client.print("             border: 0.1px solid black; ");
+            client.print("             color: black; ");
+            client.print("             padding: 20px 32px; ");
+            client.print("             text-align: center; ");
+            client.print("             text-decoration: none; ");
+            client.print("             border-radius: 4px; ");
+            client.print("             font-size: 16px; ");
+            client.print("             margin: 5px; ");
+            client.print("             cursor: pointer; ");
+            client.print("         } ");
+            client.print("         #odkleni { ");
+            client.print("             background-color: #69f0ae; ");
+            client.print("         } ");
+            client.print("         #zakleni { ");
+            client.print("             background-color: #ff5252; ");
             client.print("         } ");
             client.print("     </style> ");
             client.print(" </head> ");
             client.print(" <body> ");
-            client.print("     <h1>DoorLock</h1> ");
-            client.print("     <br> ");
-            client.print("     <div><a href=\"/25/\"><button class=\"button\">ZAKLENI</button></a></div> ");
-            client.print("     <br> ");
-            client.print("     <div><a href=\"/26/\"><button class=\"button\">ODKLENI</button></a></div> ");
+            client.print("     <div class=\"box\"> ");
+            client.print("         <div><a href=\"/26/\"></a><button class=\"gumbi\" id=\"odkleni\">Odkleni</button></a></div> ");
+            client.print("         <br> ");
+            client.print("         <div><a href=\"/25/\"></a><button class=\"gumbi\" id=\"zakleni\">Zakleni</button></a></div> ");
+            client.print("     </div> ");
             client.print(" </body> ");
             client.print(" </html> ");
+
 
             // The HTTP response ends with another blank line:
             client.println();
@@ -231,14 +280,14 @@ void loop(){
   }
 
   //Bluetooth
-    if (!deviceConnected && oldDeviceConnected) {
-        delay(500);
-        pServer->startAdvertising();
-        Serial.println("start advertising");
-        oldDeviceConnected = deviceConnected;
-    }
-    if (deviceConnected && !oldDeviceConnected) {
-        oldDeviceConnected = deviceConnected;
-        digitalWrite(ZAKLENJENO, LOW);
-    }
+  if (!deviceConnected && oldDeviceConnected) {
+    delay(500);
+    pServer->startAdvertising();
+    Serial.println("start advertising");
+    oldDeviceConnected = deviceConnected;
+  }
+  if (deviceConnected && !oldDeviceConnected) {
+    oldDeviceConnected = deviceConnected;
+    digitalWrite(ZAKLENJENO, LOW);
+  }
 }
