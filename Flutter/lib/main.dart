@@ -177,7 +177,7 @@ class _MainActivityState extends State<MainActivity> {
     targetDevice?.disconnect();
 
     setState(() {
-      conncetionText = "Device Disconnected ;(";
+      conncetionText = "Device Disconnected";
     });
   }
 
@@ -280,20 +280,6 @@ class _MainActivityState extends State<MainActivity> {
                 const SizedBox(
                   height: 60,
                 ),
-                /* Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => connectToDevice(),
-                      child: const Text("connect"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => disconnectFromDevice(),
-                      child: const Text("disconnect"),
-                    ),
-                  ],
-                ), */
               ]),
         ),
       ),
