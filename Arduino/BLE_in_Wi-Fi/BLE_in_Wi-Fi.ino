@@ -200,8 +200,8 @@ void loop() {
             client.print(" </head> ");
             client.print(" <body> ");
             client.print("     <div class=\"box\"> ");
-            client.print("         <div><a href=\"/26/\"><button class=\"gumbi\" id=\"odkleni\">Odkleni</button></a></div> ");
-            client.print("         <div><a href=\"/25/\"><button class=\"gumbi\" id=\"zakleni\">Zakleni</button></a></div> ");
+            client.print("         <div><a href=\"/odkleni/\"><button class=\"gumbi\" id=\"odkleni\">Odkleni</button></a></div> ");
+            client.print("         <div><a href=\"/zakleni/\"><button class=\"gumbi\" id=\"zakleni\">Zakleni</button></a></div> ");
             client.print("     </div> ");
             client.print(" </body> ");
             client.print(" </html> ");
@@ -219,14 +219,14 @@ void loop() {
         }
 
         // Check to see if the client request was "GET /H" or "GET /L":
-        if (currentLine.endsWith("GET /25/")) {
+        if (currentLine.endsWith("GET /zakleni/")) {
           Serial.println("Zaklepam");
           digitalWrite(ZAKLENJENO, HIGH);
           digitalWrite(ODKLENJENO, LOW);
           angle = 0;
           servo.write(angle);
         }
-        if (currentLine.endsWith("GET /26/")) {
+        if (currentLine.endsWith("GET /odkleni/")) {
           Serial.println("Odklepam");
           digitalWrite(ZAKLENJENO, LOW);
           digitalWrite(ODKLENJENO, HIGH);
