@@ -150,8 +150,6 @@ void loop() {
             client.println("HTTP/1.1 200 OK");
             client.println("Content-type:text/html");
             client.println();
-
-            // the content of the HTTP response follows the header:
             client.print(" <!DOCTYPE html> ");
             client.print(" <html lang=\"en\"> ");
             client.print(" <head> ");
