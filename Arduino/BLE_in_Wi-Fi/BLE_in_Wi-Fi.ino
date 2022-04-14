@@ -21,8 +21,6 @@ IPAddress local_ip(192, 168, 200, 2);
 int endpoint_port = 51820;
 int povezani = 0;
 
-static constexpr const uint32_t UPDATE_INTERVAL_MS = 5000;
-
 //button init
 #define BUTTON_PIN_BITMASK 0x200000000
 
@@ -65,7 +63,7 @@ class Callbacks: public BLECharacteristicCallbacks {
             Serial.println("Odklepam");
             digitalWrite(ODKLENJENO, HIGH);
             digitalWrite(ZAKLENJENO, LOW);
-            angle = 180;
+            angle = 0;
             servo.write(angle);
             delay(15);
           }
@@ -73,7 +71,7 @@ class Callbacks: public BLECharacteristicCallbacks {
             Serial.println("Zaklepam");
             digitalWrite(ODKLENJENO, LOW);
             digitalWrite(ZAKLENJENO, HIGH);
-            angle = 0;
+            angle = 180;
             servo.write(angle);
             delay(15);
           }
@@ -129,7 +127,7 @@ void setup() {
   BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
   pAdvertising->addServiceUUID(SERVICE_UUID);
   pAdvertising->setScanResponse(false);
-  pAdvertising->setMinPreferred(0x0);  // set value to 0x00 to not advertise this parameter
+  pAdvertising->setMinPreferred(0x0);
   BLEDevice::startAdvertising();
   digitalWrite(ODKLENJENO, HIGH);
   Serial.println("Bluetooth is set, starting advertising...");
@@ -138,22 +136,17 @@ void setup() {
 void loop() {
   //WiFi and WireGuard
   WiFiClient client = server.available();
-  if (client) {  // if you get a client,
+  if (client) {
     Serial.printf("connected: %d", povezani);
     povezani++;
-    Serial.println("New Client.");           // print a message out the serial port
-    String currentLine = "";                // make a String to hold incoming data from the client
-    while (client.connected()) {            // loop while the client's connected
-      if (client.available()) {             // if there's bytes to read from the client,
-        char c = client.read();             // read a byte, then
-        Serial.write(c);                    // print it out the serial monitor
-        if (c == '\n') {                    // if the byte is a newline character
-
-          // if the current line is blank, you got two newline characters in a row.
-          // that's the end of the client HTTP request, so send a response:
+    Serial.println("New Client.");
+    String currentLine = "";
+    while (client.connected()) {
+      if (client.available()) {
+        char c = client.read();
+        Serial.write(c);
+        if (c == '\n') {
           if (currentLine.length() == 0) {
-            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-            // and a content-type so the client knows what's coming, then a blank line:
             client.println("HTTP/1.1 200 OK");
             client.println("Content-type:text/html");
             client.println();
@@ -205,37 +198,31 @@ void loop() {
             client.print("     </div> ");
             client.print(" </body> ");
             client.print(" </html> ");
-
-
-            // The HTTP response ends with another blank line:
             client.println();
-            // break out of the while loop:
             break;
-          } else {    // if you got a newline, then clear currentLine:
+          } else {
             currentLine = "";
           }
-        } else if (c != '\r') {  // if you got anything else but a carriage return character,
-          currentLine += c;      // add it to the end of the currentLine
+        } else if (c != '\r') {
+          currentLine += c;
         }
 
-        // Check to see if the client request was "GET /H" or "GET /L":
         if (currentLine.endsWith("GET /zakleni/")) {
           Serial.println("Zaklepam");
           digitalWrite(ZAKLENJENO, HIGH);
           digitalWrite(ODKLENJENO, LOW);
-          angle = 0;
+          angle = 180;
           servo.write(angle);
         }
         if (currentLine.endsWith("GET /odkleni/")) {
           Serial.println("Odklepam");
           digitalWrite(ZAKLENJENO, LOW);
           digitalWrite(ODKLENJENO, HIGH);
-          angle = 180;
+          angle = 0;
           servo.write(angle);
         }
       }
     }
-    // close the connection:
     client.stop();
     Serial.println("Client Disconnected.");
   }
