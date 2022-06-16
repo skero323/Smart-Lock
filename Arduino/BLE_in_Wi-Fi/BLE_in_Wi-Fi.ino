@@ -16,7 +16,7 @@ char ssid[] = "Gaj_Wifi";
 char password[] = "mojdom123";
 char private_key[] = "0Pw/m0VlbsN1qkpNeGxnCRzQI4bcRnMHNyyWM7NXlWE=";
 char public_key[] = "04pddjg8rzMmZbhXImwGBaOkWXXplmZM6aEcwfuzESw=";
-char endpoint_address[] = "192.168.1.5";
+char endpoint_address[] = "192.168.1.102";
 IPAddress local_ip(192, 168, 200, 2);
 int endpoint_port = 51820;
 int povezani = 0;
